@@ -53,13 +53,23 @@ const DrawingCanvas = () => {
     };
   }, [isDrawing, lastPoint]);
 
+  const clearCanvas = () => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+    const rect = canvas.getBoundingClientRect();
+    context.clearRect(0,0, rect.width, rect.height);
+  }
+
   return (
+    <div>
+    <button onClick={clearCanvas}>Wipe canvas</button>
     <canvas
       ref={canvasRef}
       width={800}
       height={600}
       style={{ border: '1px solid #000' }}
     />
+    </div>
   );
 };
 
