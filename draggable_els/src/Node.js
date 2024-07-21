@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-
+import './Node.css'
 
 const Node = (props) => {
     const [color, setColor] = useState("white");
@@ -10,7 +10,10 @@ const Node = (props) => {
             setColor("white");
         }
     }, [props.state])
-    return <button style={{background: color}}>{props.name}</button>
+    return <button 
+        style={{background: color}}
+        className="canvas-button">
+        {props.name}</button>
 }
 
 export default Node;
