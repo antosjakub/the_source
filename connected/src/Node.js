@@ -13,7 +13,7 @@ const Node = (props) => {
         style={{background: color, left: props.left, top: props.top}}
         className="clickable-element"
         onClick={props.onClick}>
-        <textarea>{props.name}</textarea>
+        <textarea style={{resize:"none", textAlign:"center"}}>{props.name}</textarea>
         </div>
     );
 }
