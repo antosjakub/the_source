@@ -7,7 +7,7 @@ const Board = () => {
     const canvasRef = useRef(null)
 
     // array storing the position of clicked elements
-    const handleClick = (e, element) => {
+    const handleClick = (element) => {
         // calculate the center of the clicked element
         const rect = element.getBoundingClientRect();
         const x = rect.left + rect.width/2;
@@ -38,14 +38,14 @@ return (
       <div
         className="clickable-element"
         style={{ top: '50px', left: '100px' }}
-        onClick={(e) => handleClick(e, e.target)}
+        onClick={(e) => handleClick(e.target)}
       >
         Element 1
       </div>
       <div
         className="clickable-element"
         style={{ top: '200px', left: '300px' }}
-        onClick={(e) => handleClick(e, e.target)}
+        onClick={(e) => handleClick(e.target)}
       >
         Element 2
       </div>

@@ -1,14 +1,3 @@
-.clickable-element {
-  position: absolute;
-  width: 70px;
-  height: 40px;
-  background-color: rgb(189, 189, 189);
-  border: 1px solid #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
 #canvasContainer {
   position: relative;
   width: 500px;
@@ -21,4 +10,13 @@
   position: absolute;
   top: 0;
   left: 0;
+}
+.clickable-element {
+  position: absolute;
+  background-color: rgb(189, 189, 189);
+  border: 1px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
