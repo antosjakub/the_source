@@ -1,8 +1,10 @@
 import { useState, useRef } from "react";
 import './Board.css';
+import Node from "./Node";
 
 const Board = () => {
-    //const [drag_state, setState] = useState("static");
+    const [connect_mode, setConnectMode] = useState("true"); // states: true / false
+
     const [positions, setPositions] = useState([]);
     const canvasRef = useRef(null)
 
@@ -33,22 +35,25 @@ const Board = () => {
     }
 
 return (
-    <div id="canvasContainer">
-      <canvas ref={canvasRef} id="canvasElement" width="500" height="400"></canvas>
-      <div
-        className="clickable-element"
-        style={{ top: '50px', left: '100px' }}
-        onClick={(e) => handleClick(e.target)}
-      >
-        Element 1
-      </div>
-      <div
-        className="clickable-element"
-        style={{ top: '200px', left: '300px' }}
-        onClick={(e) => handleClick(e.target)}
-      >
-        Element 2
-      </div>
+    <div>
+        <button onClick={() => connect_mode == "true" ? setConnectMode("false") : setConnectMode("true")}>Connect Mode</button>
+        <div id="canvasContainer">
+          <canvas ref={canvasRef} id="canvasElement" width="500" height="400"></canvas>
+          <Node 
+            connect_mode={connect_mode}
+            name="TXT1"
+            onClick={(e) => handleClick(e.target)}
+            top="100px"
+            left="200px"
+          ></Node>
+          <Node 
+            connect_mode={connect_mode}
+            name="TXT2"
+            onClick={(e) => handleClick(e.target)}
+            top="200px"
+            left="200px"
+          ></Node>
+        </div>
     </div>
   );
 }
