@@ -28,12 +28,10 @@ const Board = () => {
                     <button>Pen</button>
                     <button>Eraser</button>
                 </div>
-                <div id="BTN_port">
-                    <button>Import</button>
-                    <button>Export</button>
-                </div>
-                <div id="BTN_clear">
-                    <button>Clear</button>
+                <div id="BTN_board">
+                    <button>Clear Board</button>
+                    <button>Import Board</button>
+                    <button>Export Board</button>
                 </div>
             </div>
             </div>
