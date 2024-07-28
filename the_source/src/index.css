@@ -19,7 +19,6 @@
 #canvas {
     position: relative;
     height: 300px;
-    width: 100%;
     border: 3px solid black;
 }
 canvas {
@@ -41,11 +40,11 @@ canvas {
 
 button {
     color: white;
-    padding: 15px 32px;
+    padding: 12px 24px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
     float: left;
     background-color: #969696;
@@ -53,4 +52,8 @@ button {
 }
 button:hover {
   background-color: #6c6c6c;
+}
+#BTN_select, #BTN_node, #BTN_pen, #BTN_port, #BTN_clear {
+    margin-right: 2px;
+    margin-left: 2px;
 }
