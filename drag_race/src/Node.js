@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import './Node.css';
+import { useState, useRef, useEffect } from "react";
+import './index.css';
 import Draggable from "react-draggable";
 
 function return_length(string) {
@@ -15,6 +15,13 @@ function Node(props) {
     const [prev_text_len, setPrevTextLen] = useState({n_lines: 1, n_letters: 0})
     const [position, setPosition] = useState({left: props.left, top: props.top})
 
+    useEffect(() => {
+        if (textarea_ref.current) {
+          const rect = textarea_ref.current.getBoundingClientRect();
+          console.log('Bounding rect:', rect);
+        }
+    }, [text]);
+
     function updateElement(e) {
         // look at previous n_letters, n_lines - compare with current
         // -> change top / left position
@@ -29,13 +36,14 @@ function Node(props) {
 
         const delta_lines = n_lines - prev_text_len.n_lines
         const delta_letters = n_letters - prev_text_len.n_letters
-        console.log(delta_lines, delta_letters)
         const e_rect = e.target.getBoundingClientRect();
-        setPosition({left: e_rect.left - 3*delta_letters, top: e_rect.top-1 - 6*delta_lines})
+        console.log(e_rect.left, e_rect.top)
+        setPosition({left: e_rect.left - 0*3*delta_letters, top: e_rect.top-1 - 0*6*delta_lines})
 
         setPrevTextLen({n_lines: n_lines, n_letters: n_letters})
     }
 
+    //return  <Draggable><textarea
     return  <textarea
                 ref={textarea_ref}
                 value={text}
@@ -45,6 +53,7 @@ function Node(props) {
                 rows={n_rows}
                 style={{left: position.left, top: position.top}}
             />
+            //></Draggable>
 }
 
 export default Node;
