@@ -29,7 +29,7 @@ const Board = () => {
             </div>
             <div id="canvas">
                 <canvas></canvas>
-                <Node top="100px" left="500px"></Node>
+                <Node top={100} left={500}></Node>
             </div>
         </div>
     )

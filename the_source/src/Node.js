@@ -36,10 +36,8 @@ function Node(props) {
 
         const delta_lines = n_lines - prev_text_len.n_lines
         const delta_letters = n_letters - prev_text_len.n_letters
-        const e_rect = e.target.getBoundingClientRect();
-        console.log(e_rect.left, e_rect.top)
-        //setPosition({left: e_rect.left - 0*3*delta_letters, top: e_rect.top - 0*6*delta_lines})
-        setPosition({left: 500, top: 100});
+        console.log(delta_lines, delta_letters)
+        setPosition({left: position.left - 3*delta_letters, top: position.top - 6*delta_lines})
 
         setPrevTextLen({n_lines: n_lines, n_letters: n_letters})
     }
