@@ -5,9 +5,8 @@ import Node from './Node'
 
 const container = document.getElementById("root");
 const root = ReactDOM.createRoot(container);
-//<Draggable><Node></Node></Draggable>
 root.render(
   <React.StrictMode>
-    <Node></Node>
+    <Node top="100px" left="500px"></Node>
   </React.StrictMode>
 );
