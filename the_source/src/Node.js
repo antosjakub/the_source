@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import './index.css';
-//import Draggable from "react-draggable";
+import Draggable from "react-draggable";
 
 function return_length(string) {
     return string.length
@@ -42,8 +42,7 @@ function Node(props) {
         setPrevTextLen({n_lines: n_lines, n_letters: n_letters})
     }
 
-    //return  <Draggable><textarea
-    return  <textarea
+    return  <Draggable><textarea
                 ref={textarea_ref}
                 value={text}
                 className="node"
@@ -51,8 +50,7 @@ function Node(props) {
                 cols={n_cols}
                 rows={n_rows}
                 style={{left: position.left, top: position.top}}
-            />
-            //></Draggable>
+            /></Draggable>
 }
 
 export default Node;
