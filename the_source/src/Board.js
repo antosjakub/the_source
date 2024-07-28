@@ -1,7 +1,17 @@
 import Node from "./Node"
 import './index.css'
+import { useState } from "react";
 
 const Board = () => {
+    const [node_list, setNodeList] = useState([{top: 100, left: 500}]);
+    const addNewNode = () => {
+        setNodeList([...node_list, {
+            top: 20*Math.floor(10*Math.random()),
+            left: 100*Math.floor(10*Math.random())
+        }])
+    }
+
+
     return (
         <div>
             <div id="header">
@@ -10,7 +20,7 @@ const Board = () => {
                     <button>Select</button>
                 </div>
                 <div id="BTN_node">
-                    <button>New Node</button>
+                    <button onClick={addNewNode}>New Node</button>
                     <button>Delete Node</button>
                     <button>Connect Nodes</button>
                 </div>
@@ -29,7 +39,13 @@ const Board = () => {
             </div>
             <div id="canvas">
                 <canvas></canvas>
-                <Node top={100} left={500}></Node>
+                {node_list.map((node, index) => (
+                    <Node
+                      key={index}
+                      top={node.top}
+                      left={node.left}
+                    />
+                ))}
             </div>
         </div>
     )
