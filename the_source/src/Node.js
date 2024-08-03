@@ -44,7 +44,7 @@ function Node(props) {
                 cols={n_cols}
                 rows={n_rows}
                 style={{left: position.left, top: position.top, backgroundColor: backgroundColor}}
-                disabled={props.connect_mode}
+                onClick={props.onClick}
             /></Draggable>
 }
 
