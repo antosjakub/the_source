@@ -14,13 +14,7 @@ function Node(props) {
     const [text, setText] = useState("");
     const [prev_text_len, setPrevTextLen] = useState({n_lines: 1, n_letters: 0})
     const [position, setPosition] = useState({left: props.left, top: props.top})
-
-    useEffect(() => {
-        if (textarea_ref.current) {
-          const rect = textarea_ref.current.getBoundingClientRect();
-          //console.log('Bounding rect:', rect);
-        }
-    }, [text]);
+    const backgroundColor = props.connect_mode ? "red" : "blue";
 
     function updateElement(e) {
         // look at previous n_letters, n_lines - compare with current
@@ -49,8 +43,8 @@ function Node(props) {
                 onChange={e => updateElement(e)}
                 cols={n_cols}
                 rows={n_rows}
-                style={{left: position.left, top: position.top}}
-                disabled={false}
+                style={{left: position.left, top: position.top, backgroundColor: backgroundColor}}
+                disabled={props.connect_mode}
             /></Draggable>
 }
 

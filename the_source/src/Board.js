@@ -1,10 +1,11 @@
 import Node from "./Node"
 import './index.css'
-import { useState, useRef } from "react";
+import { useState } from "react";
 
 const Board = () => {
     const [node_index, setNodeIndex] = useState(1);
     const [node_list, setNodeList] = useState([<Node key={node_index-1} top={100} left={500}></Node>])
+    const [connect_mode, setConnectMode] = useState(false);
     const addNewNode = () => {
         setNodeIndex(node_index+1);
         console.log(node_index);
@@ -13,14 +14,10 @@ const Board = () => {
               key={node_index}
               top={20*Math.floor(10*Math.random())}
               left={100*Math.floor(10*Math.random())}
+              connect_mode={connect_mode}
             />
         ])
     }
-
-    // click button -> extract button ref - get positon - left, top; width, 
-    const canvasRef = useRef(null)
-    const [connect_mode, setConnectMode] = useState("true");
-    const [node_connections, setNodeConection] = useState([]); // [[ref_1, ref_2], [ref_3, ref_1], ...]
     
     return (
         <div>
@@ -32,7 +29,7 @@ const Board = () => {
                 <div id="BTN_node">
                     <button onClick={addNewNode}>New Node</button>
                     <button>Delete Node</button>
-                    <button>Connect Nodes</button>
+                    <button onClick={() => setConnectMode(connect_mode ? false : true)}>Connect Nodes</button>
                 </div>
                 <div id="BTN_pen">
                     <button>Pen</button>
