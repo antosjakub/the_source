@@ -14,7 +14,7 @@ function Node(props) {
     const [text, setText] = useState("");
     const [prev_text_len, setPrevTextLen] = useState({n_lines: 1, n_letters: 0})
     const [position, setPosition] = useState({left: props.left, top: props.top})
-    const backgroundColor = props.connect_mode ? "red" : "blue";
+    const backgroundColor = props.connect_mode ? "#cecdcd" : "white";
 
     function updateElement(e) {
         // look at previous n_letters, n_lines - compare with current

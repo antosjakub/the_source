@@ -4,19 +4,25 @@ import { useState } from "react";
 
 const Board = () => {
     const [node_index, setNodeIndex] = useState(1);
-    const [node_list, setNodeList] = useState([<Node key={node_index-1} top={100} left={500}></Node>])
     const [connect_mode, setConnectMode] = useState(false);
+    const [node_list, setNodeList] = useState([{key:node_index-1, top:100, left:500, connect_mode:connect_mode}]);
     const addNewNode = () => {
         setNodeIndex(node_index+1);
         console.log(node_index);
         setNodeList([...node_list,
-            <Node
-              key={node_index}
-              top={20*Math.floor(10*Math.random())}
-              left={100*Math.floor(10*Math.random())}
-              connect_mode={connect_mode}
-            />
+            {
+              key: node_index,
+              top: 20*Math.floor(10*Math.random()),
+              left: 100*Math.floor(10*Math.random()),
+              connect_mode: connect_mode
+            }
         ])
+    }
+    const toggleNodes = () => {
+        for (let i=0; i<node_list.length; ++i) {
+            node_list[i].connect_mode = !connect_mode
+        }
+        setConnectMode(!connect_mode);
     }
     
     return (
@@ -29,7 +35,7 @@ const Board = () => {
                 <div id="BTN_node">
                     <button onClick={addNewNode}>New Node</button>
                     <button>Delete Node</button>
-                    <button onClick={() => setConnectMode(connect_mode ? false : true)}>Connect Nodes</button>
+                    <button onClick={toggleNodes}>Connect Nodes</button>
                 </div>
                 <div id="BTN_pen">
                     <button>Pen</button>
@@ -44,7 +50,14 @@ const Board = () => {
             </div>
             <div id="canvas">
                 <canvas></canvas>
-                {node_list}
+                {node_list.map((node_attr) => (
+                    <Node
+                      key={node_attr.key}
+                      top={node_attr.top}
+                      left={node_attr.left}
+                      connect_mode={node_attr.connect_mode}
+                    />
+                ))}
             </div>
         </div>
     )
