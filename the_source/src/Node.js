@@ -18,7 +18,7 @@ function Node(props) {
     useEffect(() => {
         if (textarea_ref.current) {
           const rect = textarea_ref.current.getBoundingClientRect();
-          console.log('Bounding rect:', rect);
+          //console.log('Bounding rect:', rect);
         }
     }, [text]);
 
@@ -50,6 +50,7 @@ function Node(props) {
                 cols={n_cols}
                 rows={n_rows}
                 style={{left: position.left, top: position.top}}
+                disabled={false}
             /></Draggable>
 }
 
