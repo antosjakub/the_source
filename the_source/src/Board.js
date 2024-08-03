@@ -90,7 +90,7 @@ const Board = () => {
             </div>
             </div>
             <div id="canvas">
-                <canvas ref={canvasRef}></canvas>
+                <canvas ref={canvasRef} width={1000} height={300}></canvas>
                 {node_list.map((node_attr) => (
                     <Node
                       key={node_attr.key}
