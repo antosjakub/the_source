@@ -36,7 +36,7 @@ function Node(props) {
         setPrevTextLen({n_lines: n_lines, n_letters: n_letters})
     }
 
-    return  <Draggable><textarea
+    return  <Draggable onDrag={props.onDrag} disabled={props.connect_mode} bounds="parent"><textarea
                 ref={textarea_ref}
                 value={text}
                 className="node"
