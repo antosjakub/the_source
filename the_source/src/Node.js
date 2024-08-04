@@ -7,7 +7,7 @@ function return_length(string) {
 }
 
 function Node(props) {
-    const textarea_ref = useRef(null);
+    const ref = useRef(null);
     const empty_textarea_width = 4
     const [n_cols, setColCount] = useState(empty_textarea_width)
     const [n_rows, setRowCount] = useState(1)
@@ -39,10 +39,10 @@ function Node(props) {
     return  <Draggable
                 onDrag={props.onDrag}
                 disabled={props.connect_mode}
-                nodeRef={textarea_ref}
+                nodeRef={ref}
                 bounds="parent">
                 <textarea
-                    ref={textarea_ref}
+                    ref={ref}
                     value={text}
                     className="node"
                     onChange={e => updateElement(e)}
