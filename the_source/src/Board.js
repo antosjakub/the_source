@@ -1,4 +1,5 @@
 import Node from "./Node"
+import Canvas from "./Canvas";
 import './index.css'
 import { useState, useRef } from "react";
 
@@ -96,7 +97,7 @@ const Board = () => {
             </div>
             </div>
             <div id="canvas">
-                <canvas ref={canvasRef} width={1000} height={300}></canvas>
+                <Canvas ref={canvasRef} width={1000} height={300}></Canvas>
                 {node_list.map((node_attr) => (
                     <Node
                       key={node_attr.key}
@@ -113,49 +114,3 @@ const Board = () => {
 }
 
 export default Board;
-
-    // HANDLE THE CREATION OF NEW CONNECTIONS IN CONNECT MODE
-    //const [node_pair, setNodePair] = useState([]); // [] or [ref_3] or [ref_3, ref_1]
-    //const handleClick = (element) => {
-    //    setNodePair((prev_node_pair) => {
-    //        if (prev_node_pair.length < 1) {
-    //            return [element];
-    //        } else {
-    //            //drawLine([prev_node_pair[0], {x, y}]);
-    //            return [...prev_node_pair, element];
-    //            return [];
-    //        }
-    //    })
-    //}
-
-
-    // MIGHT COME IN HANDY
-    //const drawNodeConnections = (node_connections) => {
-    //    const canvas = canvasRef.current;
-    //    const ctx = canvas.getContext("2d")
-    //    for (let i = 0; i < node_connections.length; i++) { 
-    //        ctx.beginPath();
-    //        ctx.moveTo(node_connections[i][0].left, node_connections[i][0].top);
-    //        ctx.lineTo(node_connections[i][1].left, node_connections[i][1].top);
-    //        ctx.stroke();
-    //    }
-    //}
-    //const nodeClick = (element) => {
-    //    setPositions((prev_pos_array) => {
-    //        if (prev_pos_array.length < 1) {
-    //            return [{x, y}];
-    //        } else {
-    //            drawLine([prev_pos_array[0], {x, y}]);
-    //            return [];
-    //        }
-    //    })
-    //}
-    //    // calculate the center of the clicked element
-    //    const canvas = canvasRef.current;
-    //    const el_canvas = canvas.getBoundingClientRect();
-    //    const el_rect = element.getBoundingClientRect();
-    //    const x = el_rect.left + el_rect.width/2 - el_canvas.left;
-    //    const y = el_rect.top + el_rect.height/2 - el_canvas.top;
-    //    // append to an array
-    //    // draw line if array contains one point already
-
