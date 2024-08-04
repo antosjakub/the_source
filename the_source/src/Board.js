@@ -71,6 +71,10 @@ const Board = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawConnections()
     }
+    const canvas = canvasRef.current;
+    const parent_div = canvas.parentElement;
+    const canvas_width = parent_div.clientWidth;
+    const canvas_height = parent_div.clientHeight;
     
     return (
         <div>
@@ -97,7 +101,7 @@ const Board = () => {
             </div>
             </div>
             <div id="canvas">
-                <Canvas ref={canvasRef} width={1000} height={300}></Canvas>
+                <Canvas ref={canvasRef} width={canvas_width} height={canvas_height}></Canvas>
                 {node_list.map((node_attr) => (
                     <Node
                       key={node_attr.key}
