@@ -64,7 +64,7 @@ const Board = () => {
             ctx.stroke();
         }
     }
-    const reDrawConnection = () => {
+    const reDrawConnections = () => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -104,7 +104,7 @@ const Board = () => {
                       left={node_attr.left}
                       connect_mode={node_attr.connect_mode}
                       onClick={e => node_attr.connect_mode ? handleClick(e.target) : null}
-                      onDrag={reDrawConnection}
+                      onDrag={reDrawConnections}
                     />
                 ))}
             </div>

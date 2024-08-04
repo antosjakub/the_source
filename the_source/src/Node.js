@@ -36,16 +36,22 @@ function Node(props) {
         setPrevTextLen({n_lines: n_lines, n_letters: n_letters})
     }
 
-    return  <Draggable onDrag={props.onDrag} disabled={props.connect_mode} bounds="parent"><textarea
-                ref={textarea_ref}
-                value={text}
-                className="node"
-                onChange={e => updateElement(e)}
-                cols={n_cols}
-                rows={n_rows}
-                style={{left: position.left, top: position.top, backgroundColor: backgroundColor}}
-                onClick={props.onClick}
-            /></Draggable>
+    return  <Draggable
+                onDrag={props.onDrag}
+                disabled={props.connect_mode}
+                nodeRef={textarea_ref}
+                bounds="parent">
+                <textarea
+                    ref={textarea_ref}
+                    value={text}
+                    className="node"
+                    onChange={e => updateElement(e)}
+                    cols={n_cols}
+                    rows={n_rows}
+                    style={{left: position.left, top: position.top, backgroundColor: backgroundColor}}
+                    onClick={props.onClick}
+                />
+            </Draggable>
 }
 
 export default Node;
