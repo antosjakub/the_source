@@ -35,6 +35,15 @@ canvas {
 	padding: 5px;
     z-index: 1; /* Ensure the button appears above the canvas */
 }
+.text_area {
+    position: absolute;
+    resize: none;
+    text-align: center;
+    border: 3px solid #cecdcd;
+    border-top: 3px solid black;
+	padding: 5px;
+    z-index: 1; /* Ensure the button appears above the canvas */
+}
 
 button {
     color: white;

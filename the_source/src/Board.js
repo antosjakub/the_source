@@ -1,15 +1,30 @@
 import Node from "./Node"
+import TextArea from "./TextArea"
 import Canvas from "./Canvas";
 import './index.css'
 import { useState, useRef } from "react";
 
 const Board = () => {
-    const [node_index, setNodeIndex] = useState(1);
     const [connect_mode, setConnectMode] = useState(false);
+    const [node_index, setNodeIndex] = useState(1);
     const [node_list, setNodeList] = useState([{key:node_index-1, top:100, left:500, connect_mode:connect_mode}]);
     const [node_pair_connection, setNodePairConnection] = useState([]) // [], [ref_1], [ref_1, ref_3]
     const [node_connections, setNodeConnections] = useState([]) // [], [[ref_1, ref_3]], [[ref_1, ref_3], [ref_2, ref_1]]
     const canvasRef = useRef(null)
+    const [text_area_index, setTextAreaIndex] = useState(1);
+    const [text_area_list, setTextAreaList] = useState([]);
+    const addNewTextArea = () => {
+        setTextAreaIndex(text_area_index+1);
+        console.log(text_area_index);
+        setTextAreaList([...text_area_list,
+            {
+              key: text_area_index,
+              top: 20*Math.floor(10*Math.random()),
+              left: 100*Math.floor(10*Math.random()),
+              connect_mode: connect_mode
+            }
+        ])
+    }
     const addNewNode = () => {
         setNodeIndex(node_index+1);
         console.log(node_index);
@@ -25,6 +40,9 @@ const Board = () => {
     const toggleNodes = () => {
         for (let i=0; i<node_list.length; ++i) {
             node_list[i].connect_mode = !connect_mode
+        }
+        for (let i=0; i<text_area_list.length; ++i) {
+            text_area_list[i].connect_mode = !connect_mode
         }
         setConnectMode(!connect_mode);
         setNodePairConnection([]);
@@ -80,10 +98,10 @@ const Board = () => {
                     <button>Select</button>
                 </div>
                 <div id="BTN_node">
+                    <button onClick={addNewTextArea}>New TextArea</button>
                     <button onClick={addNewNode}>New Node</button>
                     <button>Delete Node</button>
                     <button onClick={toggleNodes}>Connect Nodes</button>
-                    <button onClick={drawConnections}>Draw Connections</button>
                 </div>
                 <div id="BTN_pen">
                     <button>Pen</button>
@@ -106,6 +124,14 @@ const Board = () => {
                       connect_mode={node_attr.connect_mode}
                       onClick={e => node_attr.connect_mode ? handleClick(e.target) : null}
                       onDrag={reDrawConnections}
+                    />
+                ))}
+                {text_area_list.map((node_attr) => (
+                    <TextArea
+                      key={node_attr.key}
+                      top={node_attr.top}
+                      left={node_attr.left}
+                      connect_mode={node_attr.connect_mode}
                     />
                 ))}
             </div>
