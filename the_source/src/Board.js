@@ -1,5 +1,6 @@
 import Node from "./Node"
 import TextArea from "./TextArea"
+import LatexField from "./LatexField"
 import Canvas from "./Canvas";
 import './index.css'
 import { useState, useRef } from "react";
@@ -7,12 +8,15 @@ import { useState, useRef } from "react";
 const Board = () => {
     const [connect_mode, setConnectMode] = useState(false);
     const [node_index, setNodeIndex] = useState(1);
-    const [node_list, setNodeList] = useState([{key:node_index-1, top:100, left:500, connect_mode:connect_mode}]);
+    //const [node_list, setNodeList] = useState([{key:node_index-1, top:100, left:500, connect_mode:connect_mode}]);
+    const [node_list, setNodeList] = useState([]);
     const [node_pair_connection, setNodePairConnection] = useState([]) // [], [ref_1], [ref_1, ref_3]
     const [node_connections, setNodeConnections] = useState([]) // [], [[ref_1, ref_3]], [[ref_1, ref_3], [ref_2, ref_1]]
     const canvasRef = useRef(null)
     const [text_area_index, setTextAreaIndex] = useState(1);
     const [text_area_list, setTextAreaList] = useState([]);
+    const [latex_field_index, setLatexFieldIndex] = useState(1);
+    const [latex_field_list, setLatexFieldList] = useState([{key:latex_field_index-1, top:100, left:600, connect_mode:connect_mode}]);
     const addNewTextArea = () => {
         setTextAreaIndex(text_area_index+1);
         console.log(text_area_index);
@@ -37,12 +41,27 @@ const Board = () => {
             }
         ])
     }
+    const addNewLatexField = () => {
+        setLatexFieldIndex(latex_field_index+1);
+        console.log(latex_field_index);
+        setLatexFieldList([...latex_field_list,
+            {
+              key: latex_field_index,
+              top: 20*Math.floor(10*Math.random()),
+              left: 100*Math.floor(10*Math.random()),
+              connect_mode: connect_mode
+            }
+        ])
+    }
     const toggleNodes = () => {
         for (let i=0; i<node_list.length; ++i) {
             node_list[i].connect_mode = !connect_mode
         }
         for (let i=0; i<text_area_list.length; ++i) {
             text_area_list[i].connect_mode = !connect_mode
+        }
+        for (let i=0; i<latex_field_list.length; ++i) {
+            latex_field_list[i].connect_mode = !connect_mode
         }
         setConnectMode(!connect_mode);
         setNodePairConnection([]);
@@ -95,22 +114,23 @@ const Board = () => {
             <div id="header">
             <div id="button_bar">
                 <div id="BTN_select">
-                    <button>Select</button>
+                    <button className="btn_in_bar">Select</button>
                 </div>
                 <div id="BTN_node">
-                    <button onClick={addNewTextArea}>New TextArea</button>
-                    <button onClick={addNewNode}>New Node</button>
-                    <button>Delete Node</button>
-                    <button onClick={toggleNodes}>Connect Nodes</button>
+                    <button className="btn_in_bar" onClick={addNewLatexField}>New LatexField</button>
+                    <button className="btn_in_bar" onClick={addNewTextArea}>New TextArea</button>
+                    <button className="btn_in_bar" onClick={addNewNode}>New Node</button>
+                    <button className="btn_in_bar">Delete Node</button>
+                    <button className="btn_in_bar" onClick={toggleNodes}>Connect Nodes</button>
                 </div>
                 <div id="BTN_pen">
-                    <button>Pen</button>
-                    <button>Eraser</button>
+                    <button className="btn_in_bar">Pen</button>
+                    <button className="btn_in_bar">Eraser</button>
                 </div>
                 <div id="BTN_board">
-                    <button>Clear Board</button>
-                    <button>Import Board</button>
-                    <button>Export Board</button>
+                    <button className="btn_in_bar">Clear Board</button>
+                    <button className="btn_in_bar">Import Board</button>
+                    <button className="btn_in_bar">Export Board</button>
                 </div>
             </div>
             </div>
@@ -128,6 +148,14 @@ const Board = () => {
                 ))}
                 {text_area_list.map((node_attr) => (
                     <TextArea
+                      key={node_attr.key}
+                      top={node_attr.top}
+                      left={node_attr.left}
+                      connect_mode={node_attr.connect_mode}
+                    />
+                ))}
+                {latex_field_list.map((node_attr) => (
+                    <LatexField
                       key={node_attr.key}
                       top={node_attr.top}
                       left={node_attr.left}

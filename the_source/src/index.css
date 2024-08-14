@@ -44,8 +44,20 @@ canvas {
 	padding: 5px;
     z-index: 1; /* Ensure the button appears above the canvas */
 }
+.latex_field {
+    position: absolute;
+    resize: none;
+    text-align: center;
+    border: 3px solid #cecdcd;
+	padding: 5px;
+    z-index: 1; /* Ensure the button appears above the canvas */
+}
+#BTN_compile_latex {
+    /*position: absolute;*/
+    z-index: 1; /* Ensure the button appears above the canvas */
+}
 
-button {
+button.btn_in_bar {
     color: white;
     padding: 12px 24px;
     text-align: center;
