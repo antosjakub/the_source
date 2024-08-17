@@ -45,6 +45,7 @@ function LatexField(props) {
         <textarea 
           className="textarea"
           rows={n_rows}
+          cols={n_cols}
           onChange={updateElement}
         ></textarea>
       </div>
