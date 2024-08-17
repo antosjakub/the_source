@@ -74,8 +74,6 @@ button:hover {
   align-items: center;
   justify-content: center;
   width: 100px;
-  background-color: aquamarine;
-  border: 2px solid black;
 }
 .divInput, .divCompile, .divOutput {
   z-index: 1; /* Ensure the button appears above the canvas */
@@ -84,11 +82,13 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #ccc;
 }
 .textarea {
   resize: none;
   text-align: center;
+	padding: 5px;
+  border: 3px solid #cecdcd;
+  border-top: 3px solid black;
 }
 .divCompile {
   display: flex;
@@ -96,6 +96,19 @@ button:hover {
   justify-content: center;
   height: 20px;
 }
+.compileButton {
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    float: left;
+    background-color: #969696;
+    border: 1px solid rgb(122, 122, 122);
+    margin-top: 2px;
+}
 .divOutput {
-  background-color: blue;
+    border: 1px solid #cecdcd;
+    margin-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
