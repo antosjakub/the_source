@@ -39,8 +39,13 @@ function LatexField(props) {
   }
 
   return (
-    <Draggable>
-    <div className="container" style={{left: props.left, top: props.top}}>
+    <Draggable
+      nodeRef={ref}
+      bounds="parent"
+    >
+    <div className="container" style={{left: props.left, top: props.top}}
+      ref={ref}
+    >
       <div className="divInput">
         <textarea 
           className="textarea"
