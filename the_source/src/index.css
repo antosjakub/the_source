@@ -83,12 +83,10 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 30px;
   border: 1px solid #ccc;
 }
 .textarea {
   width: 100%;
-  height: 100%;
   resize: none;
 }
 .divCompile {
@@ -98,7 +96,5 @@ button:hover {
   height: 20px;
 }
 .divOutput {
-  height: 10px;
-  width: 100px;
   background-color: blue;
 }
