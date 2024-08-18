@@ -9,18 +9,32 @@ function return_length(string) {
 }
 
 function LatexField(props) {
-  const [renderedLatex, setRenderedLatex] = useState('');
-  const handleRenderClick = () => {
-    setRenderedLatex(text);
-  };
-  const ref = useRef(null);
-  const empty_textarea_width = 4
-  const [n_cols, setColCount] = useState(empty_textarea_width)
-  const [n_rows, setRowCount] = useState(1)
-  const [text, setText] = useState("");
-  const [prev_text_len, setPrevTextLen] = useState({n_letters: 0})
-  const [position, setPosition] = useState({left: props.left, top: props.top})
-  const backgroundColor = props.connect_mode ? "#cecdcd" : "white";
+    const [renderedLatex, setRenderedLatex] = useState('');
+    const handleRenderClick = () => {
+      setRenderedLatex(text);
+    };
+    const ref = useRef(null);
+    const empty_textarea_width = 4
+    const [n_cols, setColCount] = useState(empty_textarea_width)
+    const [n_rows, setRowCount] = useState(1)
+    const [text, setText] = useState("");
+    const [prev_text_len, setPrevTextLen] = useState({n_letters: 0})
+    const [position, setPosition] = useState({left: props.left, top: props.top})
+    const backgroundColor = updateBackgoundColor(props)
+
+    function updateBackgoundColor(props) {
+        console.log(props.connect_mode, props.delete_mode)
+        console.log("background change")
+        if (props.connect_mode && !props.delete_mode) {
+            return "#cecdcd"
+        } else if (!props.connect_mode && props.delete_mode) {
+            return "red"
+        } else if (!props.connect_mode && !props.delete_mode) {
+            return "white"
+        } else {
+            return "black"
+        }
+    }
 
   function updateElement(e) {
       // look at previous n_letters, n_lines - compare with current
@@ -52,6 +66,8 @@ function LatexField(props) {
           rows={n_rows}
           cols={n_cols}
           onChange={updateElement}
+          style={{backgroundColor: backgroundColor}}
+          onClick={props.onClick}
         ></textarea>
       </div>
       <div className="divCompile">

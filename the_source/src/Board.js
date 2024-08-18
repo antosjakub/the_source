@@ -7,6 +7,7 @@ import { useState, useRef } from "react";
 
 const Board = () => {
     const [connect_mode, setConnectMode] = useState(false);
+    const [delete_mode, setDeleteMode] = useState(false);
     const [node_index, setNodeIndex] = useState(1);
     //const [node_list, setNodeList] = useState([{key:node_index-1, top:100, left:500, connect_mode:connect_mode}]);
     const [node_list, setNodeList] = useState([]);
@@ -16,7 +17,7 @@ const Board = () => {
     const [text_area_index, setTextAreaIndex] = useState(1);
     const [text_area_list, setTextAreaList] = useState([]);
     const [latex_field_index, setLatexFieldIndex] = useState(1);
-    const [latex_field_list, setLatexFieldList] = useState([{key:latex_field_index-1, top:100, left:600, connect_mode:connect_mode}]);
+    const [latex_field_list, setLatexFieldList] = useState([{key:latex_field_index-1, top:100, left:600, connect_mode:connect_mode, delete_mode:delete_mode}]);
     const addNewTextArea = () => {
         setTextAreaIndex(text_area_index+1);
         console.log(text_area_index);
@@ -25,7 +26,8 @@ const Board = () => {
               key: text_area_index,
               top: 20*Math.floor(10*Math.random()),
               left: 100*Math.floor(10*Math.random()),
-              connect_mode: connect_mode
+              connect_mode: connect_mode,
+              delete_mode: delete_mode
             }
         ])
     }
@@ -37,7 +39,8 @@ const Board = () => {
               key: node_index,
               top: 20*Math.floor(10*Math.random()),
               left: 100*Math.floor(10*Math.random()),
-              connect_mode: connect_mode
+              connect_mode: connect_mode,
+              delete_mode: delete_mode
             }
         ])
     }
@@ -49,11 +52,12 @@ const Board = () => {
               key: latex_field_index,
               top: 20*Math.floor(10*Math.random()),
               left: 100*Math.floor(10*Math.random()),
-              connect_mode: connect_mode
+              connect_mode: connect_mode,
+              delete_mode: delete_mode
             }
         ])
     }
-    const toggleNodes = () => {
+    const toggleConnectMode = () => {
         for (let i=0; i<node_list.length; ++i) {
             node_list[i].connect_mode = !connect_mode
         }
@@ -65,6 +69,19 @@ const Board = () => {
         }
         setConnectMode(!connect_mode);
         setNodePairConnection([]);
+    }
+    const toggleDeleteMode = () => {
+        for (let i=0; i<node_list.length; ++i) {
+            node_list[i].delete_mode = !delete_mode
+        }
+        for (let i=0; i<text_area_list.length; ++i) {
+            text_area_list[i].delete_mode = !delete_mode
+        }
+        for (let i=0; i<latex_field_list.length; ++i) {
+            latex_field_list[i].delete_mode = !delete_mode
+        }
+        setDeleteMode(!delete_mode)
+        console.log(delete_mode)
     }
     const handleClick = (element) => {
         console.log("clicked!", element)
@@ -108,6 +125,29 @@ const Board = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawConnections()
     }
+    const handleNodeClick = (e, node_attr) => {
+        if (node_attr.connect_mode) {
+            handleClick(e.target)
+        }
+        if (node_attr.delete_mode) {
+            removeElement(node_attr.key, "Node")
+        }
+
+
+    }
+    const removeElement = (target_key, type) => {
+        console.log("remove")
+        if (type == "TextArea") {
+            console.log(target_key, type)
+            setTextAreaList(text_area_list.filter(dict => dict.key != target_key))
+        } else if (type == "LatexField") {
+            console.log(target_key, type)
+            setLatexFieldList(latex_field_list.filter(dict => dict.key != target_key))
+        } else if (type == "Node") {
+            console.log(target_key, type)
+            setNodeList(node_list.filter(dict => dict.key != target_key))
+        }
+    }
     
     return (
         <div>
@@ -120,8 +160,8 @@ const Board = () => {
                     <button className="btn_in_bar" onClick={addNewLatexField}>New LatexField</button>
                     <button className="btn_in_bar" onClick={addNewTextArea}>New TextArea</button>
                     <button className="btn_in_bar" onClick={addNewNode}>New Node</button>
-                    <button className="btn_in_bar">Delete Node</button>
-                    <button className="btn_in_bar" onClick={toggleNodes}>Connect Nodes</button>
+                    <button className="btn_in_bar" onClick={toggleDeleteMode}>Delete Mode</button>
+                    <button className="btn_in_bar" onClick={toggleConnectMode}>Connect Mode</button>
                 </div>
                 <div id="BTN_pen">
                     <button className="btn_in_bar">Pen</button>
@@ -142,7 +182,9 @@ const Board = () => {
                       top={node_attr.top}
                       left={node_attr.left}
                       connect_mode={node_attr.connect_mode}
-                      onClick={e => node_attr.connect_mode ? handleClick(e.target) : null}
+                      delete_mode={node_attr.delete_mode}
+                      onClick={e => handleNodeClick(e.target, node_attr)}
+                      //onClick={e => node_attr.connect_mode ? handleClick(e.target) : null}
                       onDrag={reDrawConnections}
                     />
                 ))}
@@ -152,6 +194,8 @@ const Board = () => {
                       top={node_attr.top}
                       left={node_attr.left}
                       connect_mode={node_attr.connect_mode}
+                      delete_mode={node_attr.delete_mode}
+                      onClick={() => node_attr.delete_mode ? removeElement(node_attr.key, "TextArea") : null}
                     />
                 ))}
                 {latex_field_list.map((node_attr) => (
@@ -160,6 +204,8 @@ const Board = () => {
                       top={node_attr.top}
                       left={node_attr.left}
                       connect_mode={node_attr.connect_mode}
+                      delete_mode={node_attr.delete_mode}
+                      onClick={() => node_attr.delete_mode ? removeElement(node_attr.key, "LatexField") : null}
                     />
                 ))}
             </div>

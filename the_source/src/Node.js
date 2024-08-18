@@ -14,7 +14,21 @@ function Node(props) {
     const [text, setText] = useState("");
     const [prev_text_len, setPrevTextLen] = useState({n_lines: 1, n_letters: 0})
     const [position, setPosition] = useState({left: props.left, top: props.top})
-    const backgroundColor = props.connect_mode ? "#cecdcd" : "white";
+    const backgroundColor = updateBackgoundColor(props)
+
+    function updateBackgoundColor(props) {
+        console.log(props.connect_mode, props.delete_mode)
+        console.log("background change")
+        if (props.connect_mode && !props.delete_mode) {
+            return "#cecdcd"
+        } else if (!props.connect_mode && props.delete_mode) {
+            return "red"
+        } else if (!props.connect_mode && !props.delete_mode) {
+            return "white"
+        } else {
+            return "black"
+        }
+    }
 
     function updateElement(e) {
         // look at previous n_letters, n_lines - compare with current

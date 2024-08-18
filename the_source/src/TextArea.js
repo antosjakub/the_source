@@ -14,8 +14,21 @@ function TextArea(props) {
     const [text, setText] = useState("");
     const [prev_text_len, setPrevTextLen] = useState({n_letters: 0})
     const [position, setPosition] = useState({left: props.left, top: props.top})
-    const backgroundColor = props.connect_mode ? "#cecdcd" : "white";
+    const backgroundColor = updateBackgoundColor(props)
 
+    function updateBackgoundColor(props) {
+        console.log(props.connect_mode, props.delete_mode)
+        console.log("background change")
+        if (props.connect_mode && !props.delete_mode) {
+            return "#cecdcd"
+        } else if (!props.connect_mode && props.delete_mode) {
+            return "red"
+        } else if (!props.connect_mode && !props.delete_mode) {
+            return "white"
+        } else {
+            return "black"
+        }
+    }
     function updateElement(e) {
         // look at previous n_letters, n_lines - compare with current
         // -> change top / left position
@@ -44,6 +57,7 @@ function TextArea(props) {
                     cols={n_cols}
                     rows={n_rows}
                     style={{left: position.left, top: position.top, backgroundColor: backgroundColor}}
+                    onClick={props.onClick}
                 />
             </Draggable>
 }
