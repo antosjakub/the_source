@@ -19,6 +19,7 @@ const Board = () => {
     const [text_area_list, setTextAreaList] = useState([]);
     const [latex_field_index, setLatexFieldIndex] = useState(1);
     const [latex_field_list, setLatexFieldList] = useState([{key:latex_field_index-1, top:100, left:600, connect_mode:connect_mode, delete_mode:delete_mode}]);
+    const [showPopup, setShowPopup] = useState(false);
     const addNewTextArea = () => {
         setTextAreaIndex(text_area_index+1);
         console.log(text_area_index);
@@ -95,16 +96,15 @@ const Board = () => {
             setDeleteMode(!delete_mode)
         }
     }
-    const handleClick = (element) => {
-        console.log("clicked!", element)
-        setNodePairConnection((n_n_c) => {
-            if (n_n_c.length == 0) {
+    const addNodeConnection = (element) => {
+        setNodePairConnection((n_p_c) => {
+            if (n_p_c.length == 0) {
                 return [element];
-            } else if (n_n_c.length == 1) {
-                if (n_n_c[0] == element) {
+            } else if (n_p_c.length == 1) {
+                if (n_p_c[0] == element) {
                     console.log("node connected to itself?")
                 } else {
-                    setNodeConnections([...node_connections, [...n_n_c, element]])
+                    setNodeConnections([...node_connections, [...n_p_c, element]])
                     console.log("new node conection established", element)
                 }
                 return [];
@@ -139,13 +139,11 @@ const Board = () => {
     }
     const handleNodeClick = (e, node_attr) => {
         if (node_attr.connect_mode) {
-            handleClick(e.target)
+            addNodeConnection(e.target)
         }
         if (node_attr.delete_mode) {
             removeElement(node_attr.key, "Node")
         }
-
-
     }
     const removeElement = (target_key, type) => {
         console.log("remove")
@@ -160,7 +158,6 @@ const Board = () => {
             setNodeList(node_list.filter(dict => dict.key != target_key))
         }
     }
-    const [showPopup, setShowPopup] = useState(false);
     const togglePopup = () => {
         setShowPopup(!showPopup);
     };
