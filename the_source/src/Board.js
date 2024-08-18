@@ -183,8 +183,7 @@ const Board = () => {
                       left={node_attr.left}
                       connect_mode={node_attr.connect_mode}
                       delete_mode={node_attr.delete_mode}
-                      onClick={e => handleNodeClick(e.target, node_attr)}
-                      //onClick={e => node_attr.connect_mode ? handleClick(e.target) : null}
+                      onClick={e => handleNodeClick(e, node_attr)}
                       onDrag={reDrawConnections}
                     />
                 ))}
