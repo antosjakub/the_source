@@ -20,6 +20,9 @@ const Board = () => {
     const [latex_field_index, setLatexFieldIndex] = useState(1);
     const [latex_field_list, setLatexFieldList] = useState([{key:latex_field_index-1, top:100, left:600, connect_mode:connect_mode, delete_mode:delete_mode}]);
     const [showPopup, setShowPopup] = useState(false);
+    const [text_area_internals, setTextAreaInternals] = useState({})
+    const [node_internals, setNodeInternals] = useState({})
+    const [latex_field_internals, setLatexFieldInternals] = useState({})
     const addNewTextArea = () => {
         setTextAreaIndex(text_area_index+1);
         console.log(text_area_index);
@@ -29,7 +32,7 @@ const Board = () => {
               top: 20*Math.floor(10*Math.random()),
               left: 100*Math.floor(10*Math.random()),
               connect_mode: connect_mode,
-              delete_mode: delete_mode
+              delete_mode: delete_mode,
             }
         ])
     }
@@ -148,19 +151,71 @@ const Board = () => {
     const removeElement = (target_key, type) => {
         console.log("remove")
         if (type == "TextArea") {
-            console.log(target_key, type)
             setTextAreaList(text_area_list.filter(dict => dict.key != target_key))
+            setTextAreaInternals(Object.keys(text_area_internals).filter(key => key != target_key).reduce((newObj, key) => {
+                newObj[key] = text_area_internals[key];
+                return newObj;
+            }, {}));
+
         } else if (type == "LatexField") {
-            console.log(target_key, type)
             setLatexFieldList(latex_field_list.filter(dict => dict.key != target_key))
+            setLatexFieldInternals(Object.keys(latex_field_internals).filter(key => key != target_key).reduce((newObj, key) => {
+                newObj[key] = latex_field_internals[key];
+                return newObj;
+            }, {}));
         } else if (type == "Node") {
-            console.log(target_key, type)
             setNodeList(node_list.filter(dict => dict.key != target_key))
+            setNodeInternals(Object.keys(node_internals).filter(key => key != target_key).reduce((newObj, key) => {
+                newObj[key] = node_internals[key];
+                return newObj;
+            }, {}));
         }
     }
     const togglePopup = () => {
         setShowPopup(!showPopup);
     };
+
+    const exportBoard = () => {
+        console.log("EXPORT")
+        //const exportData = {
+        //    "Node": node_internals,
+        //    "TextArea": text_area_internals,
+        //    "LatexField": latex_field_internals
+        //}
+        const exportData = {
+            "Node": {},
+            "TextArea": {},
+            "LatexField": {}
+        }
+        const canvas = canvasRef.current;
+        const el_canvas = canvas.getBoundingClientRect();
+        let key, internals;
+        key = "Node";
+        internals = node_internals;
+        for (let [index, data] of Object.entries(internals)) {
+            exportData[key][index] = {}
+            exportData[key][index].left = data.left - el_canvas.left
+            exportData[key][index].top = data.top - el_canvas.top
+            exportData[key][index].text = data.text
+        }
+        key = "TextArea";
+        internals = text_area_internals;
+        for (let [index, data] of Object.entries(internals)) {
+            exportData[key][index] = {}
+            exportData[key][index].left = data.left - el_canvas.left
+            exportData[key][index].top = data.top - el_canvas.top
+            exportData[key][index].text = data.text
+        }
+        key = "LatexField";
+        internals = latex_field_internals;
+        for (let [index, data] of Object.entries(internals)) {
+            exportData[key][index] = {}
+            exportData[key][index].left = data.left - el_canvas.left
+            exportData[key][index].top = data.top - el_canvas.top
+            exportData[key][index].text = data.text
+        }
+        console.log(exportData)
+    }
     
     return (
         <div>
@@ -183,7 +238,7 @@ const Board = () => {
                 <div id="BTN_board">
                     <button className="btn_in_bar">Clear Board</button>
                     <button className="btn_in_bar">Import Board</button>
-                    <button className="btn_in_bar">Export Board</button>
+                    <button className="btn_in_bar" onClick={exportBoard}>Export Board</button>
                 </div>
             </div>
             </div>
@@ -198,6 +253,8 @@ const Board = () => {
                       delete_mode={node_attr.delete_mode}
                       onClick={e => handleNodeClick(e, node_attr)}
                       onDrag={reDrawConnections}
+                      index={node_attr.key}
+                      onExport={setNodeInternals}
                     />
                 ))}
                 {text_area_list.map((node_attr) => (
@@ -208,6 +265,8 @@ const Board = () => {
                       connect_mode={node_attr.connect_mode}
                       delete_mode={node_attr.delete_mode}
                       onClick={() => node_attr.delete_mode ? removeElement(node_attr.key, "TextArea") : null}
+                      index={node_attr.key}
+                      onExport={setTextAreaInternals}
                     />
                 ))}
                 {latex_field_list.map((node_attr) => (
@@ -218,6 +277,8 @@ const Board = () => {
                       connect_mode={node_attr.connect_mode}
                       delete_mode={node_attr.delete_mode}
                       onClick={() => node_attr.delete_mode ? removeElement(node_attr.key, "LatexField") : null}
+                      index={node_attr.key}
+                      onExport={setLatexFieldInternals}
                     />
                 ))}
             </div>

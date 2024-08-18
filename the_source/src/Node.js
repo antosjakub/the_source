@@ -17,8 +17,8 @@ function Node(props) {
     const backgroundColor = updateBackgoundColor(props)
 
     function updateBackgoundColor(props) {
-        console.log(props.connect_mode, props.delete_mode)
-        console.log("background change")
+        //console.log(props.connect_mode, props.delete_mode)
+        //console.log("background change")
         if (props.connect_mode && !props.delete_mode) {
             return "#cecdcd"
         } else if (!props.connect_mode && props.delete_mode) {
@@ -41,17 +41,31 @@ function Node(props) {
         setColCount(n_letters + empty_textarea_width)
         setRowCount(n_lines)
         setText(value)
-
         const delta_lines = n_lines - prev_text_len.n_lines
         const delta_letters = n_letters - prev_text_len.n_letters
         console.log(delta_lines, delta_letters)
         setPosition({left: position.left - 3*delta_letters, top: position.top - 6*delta_lines})
-
         setPrevTextLen({n_lines: n_lines, n_letters: n_letters})
+        //
+        updatePositionData()
     }
+    const updatePositionData = () => {
+        props.onExport((child_data) => {
+            const rect = ref.current.getBoundingClientRect()
+            child_data[props.index.toString()] = {
+                text: text,
+                left: rect.left,
+                top: rect.top
+            }
+            return child_data
+        })
+    }
+    useEffect(() => {
+        updatePositionData()
+    }, [])
 
     return  <Draggable
-                onDrag={props.onDrag}
+                onDrag={() => {props.onDrag(); updatePositionData()}}
                 disabled={props.connect_mode}
                 nodeRef={ref}
                 bounds="parent">

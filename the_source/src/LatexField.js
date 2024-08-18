@@ -1,5 +1,5 @@
 import Draggable from "react-draggable";
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { BlockMath } from 'react-katex';
 import 'katex/dist/katex.min.css';
 import './index.css';
@@ -23,8 +23,8 @@ function LatexField(props) {
     const backgroundColor = updateBackgoundColor(props)
 
     function updateBackgoundColor(props) {
-        console.log(props.connect_mode, props.delete_mode)
-        console.log("background change")
+        //console.log(props.connect_mode, props.delete_mode)
+        //console.log("background change")
         if (props.connect_mode && !props.delete_mode) {
             return "#cecdcd"
         } else if (!props.connect_mode && props.delete_mode) {
@@ -50,12 +50,29 @@ function LatexField(props) {
       const delta_letters = n_letters - prev_text_len.n_letters
       setPosition({left: position.left - 3*delta_letters, top: position.top})
       setPrevTextLen({n_letters: n_letters})
-  }
+        //
+        updatePositionData()
+    }
+    const updatePositionData = () => {
+        props.onExport((child_data) => {
+            const rect = ref.current.getBoundingClientRect()
+            child_data[props.index.toString()] = {
+                text: text,
+                left: rect.left,
+                top: rect.top
+            }
+            return child_data
+        })
+    }
+    useEffect(() => {
+        updatePositionData()
+    }, [])
 
   return (
     <Draggable
       nodeRef={ref}
       bounds="parent"
+      onDrag={updatePositionData}
     >
     <div className="container" style={{left: props.left, top: props.top}}
       ref={ref}

@@ -17,8 +17,8 @@ function TextArea(props) {
     const backgroundColor = updateBackgoundColor(props)
 
     function updateBackgoundColor(props) {
-        console.log(props.connect_mode, props.delete_mode)
-        console.log("background change")
+        //console.log(props.connect_mode, props.delete_mode)
+        //console.log("background change")
         if (props.connect_mode && !props.delete_mode) {
             return "#cecdcd"
         } else if (!props.connect_mode && props.delete_mode) {
@@ -43,12 +43,29 @@ function TextArea(props) {
         const delta_letters = n_letters - prev_text_len.n_letters
         setPosition({left: position.left - 3*delta_letters, top: position.top})
         setPrevTextLen({n_letters: n_letters})
+        //
+        updatePositionData()
     }
+    const updatePositionData = () => {
+        props.onExport((child_data) => {
+            const rect = ref.current.getBoundingClientRect()
+            child_data[props.index.toString()] = {
+                text: text,
+                left: rect.left,
+                top: rect.top
+            }
+            return child_data
+        })
+    }
+    useEffect(() => {
+        updatePositionData()
+    }, [])
 
     return  <Draggable
                 disabled={props.connect_mode}
                 nodeRef={ref}
-                bounds="parent">
+                bounds="parent"
+                onDrag={updatePositionData}>
                 <textarea
                     ref={ref}
                     value={text}
