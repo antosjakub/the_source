@@ -1,0 +1,114 @@
+#header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#button_bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 100px;
+    width: 100%;
+    /*border: 3px solid blue;*/
+    background: black;
+}
+
+#canvas {
+    position: relative;
+    height: 300px;
+    border: 3px solid black;
+}
+canvas {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.node {
+    position: absolute;
+    resize: none;
+    text-align: center;
+    border: 3px solid #cecdcd;
+	padding: 5px;
+    z-index: 1; /* Ensure the button appears above the canvas */
+}
+.text_area {
+    position: absolute;
+    resize: none;
+    text-align: center;
+    border: 3px solid #cecdcd;
+    border-top: 3px solid black;
+	padding: 5px;
+    z-index: 1; /* Ensure the button appears above the canvas */
+}
+
+button.btn_in_bar {
+    color: white;
+    padding: 12px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    float: left;
+    background-color: #969696;
+    border: 1px solid rgb(122, 122, 122);
+}
+button:hover {
+  background-color: #6c6c6c;
+}
+#BTN_select, #BTN_node, #BTN_pen, #BTN_board {
+    margin-right: 2px;
+    margin-left: 2px;
+}
+
+
+
+.container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+}
+.divInput, .divCompile, .divOutput {
+  z-index: 1; /* Ensure the button appears above the canvas */
+}
+.divInput {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.textarea {
+  resize: none;
+  text-align: center;
+	padding: 5px;
+  border: 3px solid #cecdcd;
+  border-top: 3px solid black;
+}
+.divCompile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+}
+.compileButton {
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    float: left;
+    background-color: #969696;
+    border: 1px solid rgb(122, 122, 122);
+    margin-top: 2px;
+}
+.divOutput {
+    border: 1px solid #cecdcd;
+    margin-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}

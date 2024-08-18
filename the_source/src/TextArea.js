@@ -6,13 +6,13 @@ function return_length(string) {
     return string.length
 }
 
-function Node(props) {
+function TextArea(props) {
     const ref = useRef(null);
     const empty_textarea_width = 4
     const [n_cols, setColCount] = useState(empty_textarea_width)
     const [n_rows, setRowCount] = useState(1)
     const [text, setText] = useState("");
-    const [prev_text_len, setPrevTextLen] = useState({n_lines: 1, n_letters: 0})
+    const [prev_text_len, setPrevTextLen] = useState({n_letters: 0})
     const [position, setPosition] = useState({left: props.left, top: props.top})
     const backgroundColor = updateBackgoundColor(props)
 
@@ -29,7 +29,6 @@ function Node(props) {
             return "black"
         }
     }
-
     function updateElement(e) {
         // look at previous n_letters, n_lines - compare with current
         // -> change top / left position
@@ -41,24 +40,19 @@ function Node(props) {
         setColCount(n_letters + empty_textarea_width)
         setRowCount(n_lines)
         setText(value)
-
-        const delta_lines = n_lines - prev_text_len.n_lines
         const delta_letters = n_letters - prev_text_len.n_letters
-        console.log(delta_lines, delta_letters)
-        setPosition({left: position.left - 3*delta_letters, top: position.top - 6*delta_lines})
-
-        setPrevTextLen({n_lines: n_lines, n_letters: n_letters})
+        setPosition({left: position.left - 3*delta_letters, top: position.top})
+        setPrevTextLen({n_letters: n_letters})
     }
 
     return  <Draggable
-                onDrag={props.onDrag}
                 disabled={props.connect_mode}
                 nodeRef={ref}
                 bounds="parent">
                 <textarea
                     ref={ref}
                     value={text}
-                    className="node"
+                    className="text_area"
                     onChange={e => updateElement(e)}
                     cols={n_cols}
                     rows={n_rows}
@@ -68,4 +62,4 @@ function Node(props) {
             </Draggable>
 }
 
-export default Node;
+export default TextArea;
