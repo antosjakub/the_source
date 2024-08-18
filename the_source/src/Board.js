@@ -4,6 +4,7 @@ import LatexField from "./LatexField"
 import Canvas from "./Canvas";
 import './index.css'
 import { useState, useRef } from "react";
+import Popup from './Popup';
 
 const Board = () => {
     const [connect_mode, setConnectMode] = useState(false);
@@ -57,31 +58,42 @@ const Board = () => {
             }
         ])
     }
+    const checkForDoubleModeError = (connect_mod, delete_mod) => {
+        if (connect_mod && delete_mod) {
+            togglePopup()
+            return false;
+        } else {
+            return true;
+        }
+    }
     const toggleConnectMode = () => {
-        for (let i=0; i<node_list.length; ++i) {
-            node_list[i].connect_mode = !connect_mode
+        if (checkForDoubleModeError(!connect_mode, delete_mode)) {
+            for (let i=0; i<node_list.length; ++i) {
+                node_list[i].connect_mode = !connect_mode
+            }
+            for (let i=0; i<text_area_list.length; ++i) {
+                text_area_list[i].connect_mode = !connect_mode
+            }
+            for (let i=0; i<latex_field_list.length; ++i) {
+                latex_field_list[i].connect_mode = !connect_mode
+            }
+            setConnectMode(!connect_mode);
+            setNodePairConnection([]);
         }
-        for (let i=0; i<text_area_list.length; ++i) {
-            text_area_list[i].connect_mode = !connect_mode
-        }
-        for (let i=0; i<latex_field_list.length; ++i) {
-            latex_field_list[i].connect_mode = !connect_mode
-        }
-        setConnectMode(!connect_mode);
-        setNodePairConnection([]);
     }
     const toggleDeleteMode = () => {
-        for (let i=0; i<node_list.length; ++i) {
-            node_list[i].delete_mode = !delete_mode
+        if (checkForDoubleModeError(connect_mode, !delete_mode)) {
+            for (let i=0; i<node_list.length; ++i) {
+                node_list[i].delete_mode = !delete_mode
+            }
+            for (let i=0; i<text_area_list.length; ++i) {
+                text_area_list[i].delete_mode = !delete_mode
+            }
+            for (let i=0; i<latex_field_list.length; ++i) {
+                latex_field_list[i].delete_mode = !delete_mode
+            }
+            setDeleteMode(!delete_mode)
         }
-        for (let i=0; i<text_area_list.length; ++i) {
-            text_area_list[i].delete_mode = !delete_mode
-        }
-        for (let i=0; i<latex_field_list.length; ++i) {
-            latex_field_list[i].delete_mode = !delete_mode
-        }
-        setDeleteMode(!delete_mode)
-        console.log(delete_mode)
     }
     const handleClick = (element) => {
         console.log("clicked!", element)
@@ -148,6 +160,10 @@ const Board = () => {
             setNodeList(node_list.filter(dict => dict.key != target_key))
         }
     }
+    const [showPopup, setShowPopup] = useState(false);
+    const togglePopup = () => {
+        setShowPopup(!showPopup);
+    };
     
     return (
         <div>
@@ -160,8 +176,8 @@ const Board = () => {
                     <button className="btn_in_bar" onClick={addNewLatexField}>New LatexField</button>
                     <button className="btn_in_bar" onClick={addNewTextArea}>New TextArea</button>
                     <button className="btn_in_bar" onClick={addNewNode}>New Node</button>
-                    <button className="btn_in_bar" onClick={toggleDeleteMode}>Delete Mode</button>
-                    <button className="btn_in_bar" onClick={toggleConnectMode}>Connect Mode</button>
+                    <button className="btn_in_bar" onClick={toggleDeleteMode} style={{background: delete_mode ? "black" : "#969696"}}>Delete Mode</button>
+                    <button className="btn_in_bar" onClick={toggleConnectMode} style={{background: connect_mode ? "black" : "#969696"}}>Connect Mode</button>
                 </div>
                 <div id="BTN_pen">
                     <button className="btn_in_bar">Pen</button>
@@ -208,6 +224,10 @@ const Board = () => {
                     />
                 ))}
             </div>
+            <Popup show={showPopup} handleClose={togglePopup}>
+                <h2>This is a Pop-up!</h2>
+                <p>You cannot activate "Delete Mode" and "Connect Mode" at once.</p>
+            </Popup>
         </div>
     )
 }
